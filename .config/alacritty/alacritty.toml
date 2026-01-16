@@ -1,0 +1,47 @@
+general.import = [
+  "~/.config/alacritty/themes/themes/coolnight.toml"
+]
+
+[colors.primary]
+background = "#000000"
+
+[terminal]
+[terminal.shell]
+args = ["--login"]
+program = "/usr/bin/zsh"
+
+[window]
+padding = { x = 0, y = 0 }
+decorations = "Buttonless"
+
+[[keyboard.bindings]]
+key = "Y"
+mods = "Control"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "P"
+mods = "Control"
+action = "Paste"
+
+
+[font]
+size = 12.0
+
+[font.normal]
+family = "MesloLGS Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "MesloLGS Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "MesloLGS Nerd Font"
+style = "Italic"
+
+[font.bold_italic]
+family = "MesloLGS Nerd Font"
+style = "Bold Italic"
+
+

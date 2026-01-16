@@ -1,0 +1,9 @@
+gui:
+    theme:
+        activeBorderColor:
+            - green
+            - bold
+        inactiveBorderColor:
+            - "#547998"
+        searchingActiveBorderColor:
+            - "#547998"

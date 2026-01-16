@@ -1,0 +1,66 @@
+return {
+	"stevearc/conform.nvim",
+	event = { "BufReadPre", "BufNewFile" },
+	config = function()
+		local conform = require("conform")
+
+		conform.setup({
+
+			------------------------------------------------------------------
+			-- FORMATTER CONFIGURATION
+			------------------------------------------------------------------
+			formatters = {
+				prettier = {
+					-- Force 4 spaces instead of default 2
+					prepend_args = {
+						"--tab-width",
+						"4",
+						"--use-tabs",
+						"false",
+					},
+				},
+			},
+
+			------------------------------------------------------------------
+			-- WHICH FORMATTER TO USE FOR EACH FILETYPE
+			------------------------------------------------------------------
+			formatters_by_ft = {
+				javascript = { "prettier" },
+				typescript = { "prettier" },
+				javascriptreact = { "prettier" },
+				typescriptreact = { "prettier" },
+				svelte = { "prettier" },
+				css = { "prettier" },
+				html = { "prettier" },
+				json = { "prettier" },
+				yaml = { "prettier" },
+				markdown = { "prettier" },
+				graphql = { "prettier" },
+				liquid = { "prettier" },
+
+				lua = { "stylua" },
+				python = { "isort", "black" },
+			},
+
+			------------------------------------------------------------------
+			-- AUTOFORMAT ON SAVE
+			------------------------------------------------------------------
+			format_on_save = {
+				lsp_fallback = true,
+				async = false,
+				timeout_ms = 1000,
+			},
+		})
+
+		--------------------------------------------------------------------
+		-- MANUAL FORMAT KEYBIND
+		--------------------------------------------------------------------
+		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
+			conform.format({
+				lsp_fallback = true,
+				async = false,
+				timeout_ms = 1000,
+			})
+		end, { desc = "Format file or range" })
+	end,
+}
