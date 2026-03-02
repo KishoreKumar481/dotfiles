@@ -21,7 +21,7 @@ return {
 			file = "#7F9CCB",
 		}
 
-		-- =========================
+
 		-- CUSTOM LUALINE THEME
 		-- =========================
 		local my_lualine_theme = {

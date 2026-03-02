@@ -41,6 +41,13 @@ keymap.set("n", "<C-u>", "<C-u>zz")
 -- pastes without overwriting clipboard
 keymap.set("x", "<leader>p", '"_dP', { noremap = true, silent = true })
 
+vim.keymap.set("n", "<leader>ww", function()
+	vim.cmd("w")
+end, { desc = "Save" })
+vim.keymap.set("n", "<leader>q", function()
+	vim.cmd("q")
+end, { desc = "Quit" })
+
 ---------------------
 -- Live Server toggle
 ---------------------
