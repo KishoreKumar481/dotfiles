@@ -208,3 +208,4 @@ function y() {
 }
 
 export EDITOR=nvim
+export PATH="$PATH:$HOME/development/flutter/bin"
