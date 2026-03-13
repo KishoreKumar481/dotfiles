@@ -207,5 +207,9 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+
 export EDITOR=nvim
 export PATH="$PATH:$HOME/development/flutter/bin"
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/emulator
