@@ -1,3 +1,4 @@
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -195,8 +196,6 @@ export FZF_DEFAULT_OPTS='
   --bind=ctrl-a:beginning-of-line
   --bind=ctrl-e:end-of-line
 '
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -213,3 +212,5 @@ export PATH="$PATH:$HOME/development/flutter/bin"
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/emulator
+export JAVA_HOME=/usr/lib/jvm/java-25-openjdk
+export PATH=$JAVA_HOME/bin:$PATH
