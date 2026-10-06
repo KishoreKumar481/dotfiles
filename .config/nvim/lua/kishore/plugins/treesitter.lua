@@ -15,6 +15,7 @@ return {
 				"json",
 				"bash",
 				"python",
+				"dart",
 			},
 		})
 	end,
