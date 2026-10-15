@@ -7,3 +7,6 @@ gui:
             - "#547998"
         searchingActiveBorderColor:
             - "#547998"
+git:
+    diffRenderers:
+        - command: delta --dark --paging=never --line-numbers
