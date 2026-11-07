@@ -205,10 +205,6 @@ export JAVA_HOME=/usr/lib/jvm/java-25-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 export PATH="$PATH:$HOME/.pub-cache/bin"
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/home/kishore/.lmstudio/bin"
-# End of LM Studio CLI section
-
 
 
 # Added by Antigravity CLI installer
