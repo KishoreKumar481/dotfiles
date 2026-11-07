@@ -196,16 +196,6 @@ export FZF_DEFAULT_OPTS='
   --bind=ctrl-e:end-of-line
 '
 
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-
-
 export EDITOR=nvim
 export PATH="$PATH:$HOME/development/flutter/bin"
 export ANDROID_HOME=$HOME/Android/Sdk
@@ -228,4 +218,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# opencode
+export PATH=/home/kishore/.opencode/bin:$PATH
+
+# zoxide must stay at the very end of this file
 eval "$(zoxide init zsh)"
