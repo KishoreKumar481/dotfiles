@@ -11,7 +11,39 @@ return {
 		-- Default capabilities for all servers (completion support)
 		---------------------------------------------------------------------
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-		vim.lsp.config.capabilities = cmp_nvim_lsp.default_capabilities()
+		vim.lsp.config("*", { capabilities = cmp_nvim_lsp.default_capabilities() })
+
+		---------------------------------------------------------------------
+		-- TypeScript version detection (vtsls for TS < 7, tsgo for TS >= 7)
+		---------------------------------------------------------------------
+		-- Returns the major version of <root>/node_modules/typescript, or 0
+		local function ts_major_version(root)
+			local path = vim.fs.joinpath(root, "node_modules/typescript/package.json")
+			local ok, lines = pcall(vim.fn.readfile, path)
+			if not ok or #lines == 0 then
+				return 0
+			end
+			local ok_json, pkg = pcall(vim.json.decode, table.concat(lines, "\n"))
+			if not ok_json or type(pkg) ~= "table" or type(pkg.version) ~= "string" then
+				return 0
+			end
+			return tonumber(pkg.version:match("^(%d+)")) or 0
+		end
+
+		-- Wrap a server's default root_dir so it only attaches when accept(major) is true.
+		-- The defaults are captured here, before the servers below override root_dir.
+		local function ts_version_root_dir(default_root_dir, accept)
+			return function(bufnr, on_dir)
+				default_root_dir(bufnr, function(root)
+					if accept(ts_major_version(root)) then
+						on_dir(root)
+					end
+				end)
+			end
+		end
+
+		local vtsls_default_root_dir = vim.lsp.config.vtsls.root_dir
+		local tsgo_default_root_dir = vim.lsp.config.tsgo.root_dir
 
 		---------------------------------------------------------------------
 		-- LSP Server configurations (NEW API — everything in one place)
@@ -69,7 +101,7 @@ return {
 			},
 
 			-------------------------------------------------------------------
-			-- VTSLS (Modern TS/JS LSP)
+			-- VTSLS (Modern TS/JS LSP) — TypeScript 6 and older
 			-------------------------------------------------------------------
 			vtsls = {
 				settings = {
@@ -77,6 +109,22 @@ return {
 						autoUseWorkspaceTsdk = true,
 					},
 				},
+				root_dir = ts_version_root_dir(vtsls_default_root_dir, function(major)
+					return major < 7
+				end),
+			},
+
+			-------------------------------------------------------------------
+			-- TSGO (TypeScript 7 built-in LSP: `tsc --lsp`) — TypeScript 7+
+			-------------------------------------------------------------------
+			tsgo = {
+				cmd = function(dispatchers, config)
+					local tsc = vim.fs.joinpath(config.root_dir, "node_modules/.bin/tsc")
+					return vim.lsp.rpc.start({ tsc, "--lsp", "--stdio" }, dispatchers)
+				end,
+				root_dir = ts_version_root_dir(tsgo_default_root_dir, function(major)
+					return major >= 7
+				end),
 			},
 
 			-------------------------------------------------------------------
@@ -148,6 +196,10 @@ return {
 		for name, config in pairs(servers) do
 			vim.lsp.config(name, config)
 		end
+
+		-- vtsls is enabled by mason-lspconfig's automatic_enable (it's installed via mason);
+		-- tsgo uses the project's own tsc, so it has to be enabled here.
+		vim.lsp.enable("tsgo")
 		---------------------------------------------------------------------
 		-- Diagnostic symbols
 		---------------------------------------------------------------------
