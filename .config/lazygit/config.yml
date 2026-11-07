@@ -9,7 +9,7 @@ gui:
             - "#547998"
 git:
     diffRenderers:
-        - command: delta --dark --paging=never
+        - command: delta --dark --paging=never --max-line-distance=0
           name: delta
-        - command: delta --dark --paging=never --side-by-side
+        - command: delta --dark --paging=never --side-by-side --max-line-distance=0
           name: side-by-side
